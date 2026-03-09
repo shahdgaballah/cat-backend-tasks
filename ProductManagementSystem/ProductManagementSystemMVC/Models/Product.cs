@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
@@ -11,6 +12,7 @@ namespace ProductManagementSystemMVC.Models
         public int Id { get; set; }
 
         [Required]
+        [Remote("IsProductNameExist", "Product", HttpMethod ="Post", ErrorMessage ="Name already exits")]
         public string Name { get; set; }
         public string Description { get; set; }
 

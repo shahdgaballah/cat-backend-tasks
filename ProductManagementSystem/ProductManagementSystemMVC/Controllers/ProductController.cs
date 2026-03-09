@@ -130,5 +130,17 @@ namespace ProductManagementSystemMVC.Controllers
             return RedirectToAction("Index");
 
         }
+
+        [HttpPost]
+        //param name should match the model attribute
+        public IActionResult IsProductNameExist(string name)
+        {
+            var exists = _db.products.Any(p => p.Name==name);
+            if (exists)
+            {
+                return Json(false);
+            }
+            return Json(true);
+        }
     }
 }
