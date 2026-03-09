@@ -71,8 +71,25 @@ namespace ProductManagementSystemMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.products.Update(product);
+                //if (product.File == null || product.File.Length == 0)
+                //{
+                //    ModelState.AddModelError("File", "Image is required");
+                //    return View(product);
+                //}
+                var currentPath = product.ImagePath;
+                if (product.File!=null || product.File?.Length > 0)
+                {
+                    //delete old file
+                    _fileService.DeleteFile(currentPath);
 
+                    //upload new image
+                    var newPath = _fileService.UploadFile(product.File, "/images/");
+                    currentPath=newPath;
+
+                }
+                product.ImagePath = currentPath;
+
+                _db.products.Update(product);
                 _db.SaveChanges();
 
                 return RedirectToAction("Index");
