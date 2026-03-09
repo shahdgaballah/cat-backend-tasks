@@ -96,12 +96,19 @@ namespace ProductManagementSystemMVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteProduct(int? id)
         {
+            if (id == null || id == 0) return NotFound();
             var product = _db.products.Find(id);
             if (product == null) return NotFound();
 
+            string path = product.ImagePath;
 
             _db.products.Remove(product);
             _db.SaveChanges();
+
+            if (!string.IsNullOrEmpty(path))
+            {
+                _fileService.DeleteFile(path);
+            }
 
             return RedirectToAction("Index");
 

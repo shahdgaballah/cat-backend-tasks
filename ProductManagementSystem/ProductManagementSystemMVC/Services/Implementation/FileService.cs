@@ -4,12 +4,15 @@ namespace ProductManagementSystemMVC.Services.Implementation
 {
     public class FileService : IFileService
     {
+
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public FileService(IWebHostEnvironment webHostEnvironment)
         {
             _webHostEnvironment = webHostEnvironment;
         }
+
+        
 
         public string UploadFile(IFormFile file, string path)
         {
@@ -28,6 +31,17 @@ namespace ProductManagementSystemMVC.Services.Implementation
                     fileStream.Flush();
                 }
                 return $"{path}{fileName}";
+        }
+
+        public bool DeleteFile(string filePath)
+        {
+            var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + filePath);
+            if (File.Exists(directoryPath))
+            {
+                File.Delete(directoryPath);
+                return true;
+            }
+            return false;
         }
     }
 }
