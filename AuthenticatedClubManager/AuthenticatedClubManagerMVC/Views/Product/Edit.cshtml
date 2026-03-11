@@ -1,0 +1,59 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<form method="post" asp-action="Edit" enctype="multipart/form-data">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Edit Product</h2>
+            <hr />
+        </div>
+        <div asp-validation-summary="All"></div>
+        <div class="mb-3">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            @* //validations in the client side *@
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+
+        <div class="mb-3">
+            <label asp-for="Description"></label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+
+        </div>
+        <div class="mb-3">
+            <label asp-for="Price"></label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+
+        </div>
+        <div class="mb-3">
+            <label>Current image</label>
+            <img src="@Model.ImagePath" alt="An image" height="50" width="50"/>
+            <input asp-for="ImagePath" type="hidden" />
+
+            
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="File"></label>
+            <input asp-for="File" type="file" class="form-control" />
+            <span asp-validation-for="File" class="text-danger"></span>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:150px">  Update </button>
+
+        <a asp-controller="Product"
+           asp-action="Index"
+           class="btn btn-secondary"
+           style="width:150px">
+            Back to List
+        </a>
+    </div>
+</form>
+
