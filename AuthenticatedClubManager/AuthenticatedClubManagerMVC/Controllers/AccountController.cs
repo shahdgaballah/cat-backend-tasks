@@ -18,6 +18,44 @@ namespace AuthenticatedClubManagerMVC.Controllers
      
         }
         [HttpGet]
+        public IActionResult LogIn()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LogInAsync(LoginViewModel login)
+        {
+            if (ModelState.IsValid)
+            {
+                //find email in the db
+                var user = await _userManager.FindByEmailAsync(login.Email);
+                //if not found (email doest exist in db)
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Email or password is incorrect");
+                    return View(login);
+                }
+                //else check password
+                var validPassword = await _userManager.CheckPasswordAsync(user, login.Password);
+
+                if (!validPassword)
+                {
+                    ModelState.AddModelError(string.Empty, "Email or password is incorrect");
+                    return View(login);
+
+                }
+                var res = await _signInManager.PasswordSignInAsync(user, login.Password, login.RememberMe, false);
+                if (res.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            return View(login);
+        }
+
+
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
