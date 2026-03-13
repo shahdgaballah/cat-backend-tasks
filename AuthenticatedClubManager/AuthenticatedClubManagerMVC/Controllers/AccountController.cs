@@ -7,10 +7,14 @@ namespace AuthenticatedClubManagerMVC.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        public AccountController(UserManager<IdentityUser> userManager)
+
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
+
      
         }
         [HttpGet]
@@ -40,6 +44,7 @@ namespace AuthenticatedClubManagerMVC.Controllers
                     //validating password
                     if (res.Succeeded)
                     {
+                        await _signInManager.SignInAsync(newUser, isPersistent: false);
                         return RedirectToAction("Index", "Home");
                     }
                     foreach (var e in res.Errors)
@@ -57,6 +62,12 @@ namespace AuthenticatedClubManagerMVC.Controllers
 
             }
             return View(register);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
