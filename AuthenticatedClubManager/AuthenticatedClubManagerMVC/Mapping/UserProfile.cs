@@ -10,9 +10,9 @@ namespace AuthenticatedClubManagerMVC.Mapping
         {
             //source            //dest 
             CreateMap<RegisterViewModel, User>()
-                .ForMember(des => des.UserName, opt => opt.MapFrom(src => src.Email))
+                .ForMember(des => des.UserName, opt => opt.MapFrom(src => src.Username))
                 .ForMember(des => des.Email, opt => opt.MapFrom(src => src.Email))
-                .ForMember(des => des.Name, opt => opt.MapFrom(src => src.Name))
+                
                 ;
                 
                 

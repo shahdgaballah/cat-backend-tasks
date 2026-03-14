@@ -3,6 +3,7 @@ using AuthenticatedClubManagerMVC.ViewModels.Identity;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 namespace AuthenticatedClubManagerMVC.Controllers
 {
     public class AccountController : Controller
@@ -24,8 +25,12 @@ namespace AuthenticatedClubManagerMVC.Controllers
      
         }
         [HttpGet]
-        public IActionResult LogIn()
+        public IActionResult LogIn(string returnUrl)
         {
+            var loginVM = new LoginViewModel
+            {
+                ReturnUrl = returnUrl
+            };
             return View();
         }
 
@@ -34,8 +39,10 @@ namespace AuthenticatedClubManagerMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                //find email in the db
-                var user = await _userManager.FindByEmailAsync(login.Email);
+                //find email (user) in the db
+                var isEmailValid = new EmailAddressAttribute().IsValid(login.Username);
+                var user = isEmailValid ? await _userManager.FindByEmailAsync(login.Username) : await _userManager.FindByNameAsync(login.Username);
+    
                 //if not found (email doest exist in db)
                 if (user == null)
                 {
@@ -54,6 +61,10 @@ namespace AuthenticatedClubManagerMVC.Controllers
                 var res = await _signInManager.PasswordSignInAsync(user, login.Password, login.RememberMe, false);
                 if (res.Succeeded)
                 {
+                    if (!string.IsNullOrEmpty(login.ReturnUrl))
+                    {
+                        return Redirect(login.ReturnUrl);
+                    }
                     return RedirectToAction("Index", "Home");
                 }
             }

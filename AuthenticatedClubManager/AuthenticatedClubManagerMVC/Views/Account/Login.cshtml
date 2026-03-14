@@ -11,10 +11,14 @@
 
                             <form asp-action="LogIn" method="post">
                                 <div asp-validation-summary="All"></div>
+
+                                <input asp-for="ReturnUrl" hidden />
+
+
                                 <div data-mdb-input-init class="form-outline mb-4">
-                                    <label class="form-label">Email</label>
-                                    <input asp-for="Email" class="form-control form-control-lg" />
-                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                    <label class="form-label">Email or Username</label>
+                                    <input asp-for="Username" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Username" class="text-danger"></span>
 
                                 </div>
 
