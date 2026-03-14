@@ -1,10 +1,12 @@
-using Microsoft.EntityFrameworkCore;
 using AuthenticatedClubManagerMVC.Data;
+using AuthenticatedClubManagerMVC.Models;
 using AuthenticatedClubManagerMVC.Services.Implementation;
 using AuthenticatedClubManagerMVC.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
-
+using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
+using AuthenticatedClubManagerMVC.Mapping;
 namespace AuthenticatedClubManager
 {
     public class Program
@@ -16,12 +18,13 @@ namespace AuthenticatedClubManager
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
             builder.Services.AddDbContext<ApplicationDbContext>(
                 options=>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 
             );
             //add identity efcore
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>( opt=>
+            builder.Services.AddIdentity<User, IdentityRole>( opt=>
              {
                 //password settings
                  opt.Password.RequireDigit = true;

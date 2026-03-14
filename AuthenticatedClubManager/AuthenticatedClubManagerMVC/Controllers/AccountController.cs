@@ -1,19 +1,25 @@
-﻿using AuthenticatedClubManagerMVC.ViewModels.Identity;
+﻿using AuthenticatedClubManagerMVC.Models;
+using AuthenticatedClubManagerMVC.ViewModels.Identity;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-
 namespace AuthenticatedClubManagerMVC.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly IMapper _mapper;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+
+        public AccountController(
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            IMapper mapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _mapper = mapper;
 
      
         }
@@ -70,12 +76,8 @@ namespace AuthenticatedClubManagerMVC.Controllers
                 //if not found (email doest exist in db)
                 if (user == null)
                 {
-                    var newUser = new IdentityUser()
-                    {
-                        Email = register.Email,
-                        UserName = register.Email
-
-                    };
+                                     //destination  //source
+                    var newUser = _mapper.Map<User>(register);
                     //creating user in the db => createasync takes two params newUser and password
                     var res = await _userManager.CreateAsync(newUser, register.Password);
 

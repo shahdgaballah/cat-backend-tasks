@@ -11,6 +11,12 @@
                             <form asp-action="Register" method="post">
                                 <div asp-validation-summary="All"></div>
                                 <div data-mdb-input-init class="form-outline mb-4">
+                                    <label class="form-label">Your Name</label>
+                                    <input asp-for="Name" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+
+                                </div>
+                                <div data-mdb-input-init class="form-outline mb-4">
                                     <label class="form-label">Your Email</label>
                                     <input asp-for="Email" class="form-control form-control-lg" />
                                     <span asp-validation-for="Email" class="text-danger"></span>

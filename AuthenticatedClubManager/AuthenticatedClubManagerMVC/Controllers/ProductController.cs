@@ -2,9 +2,11 @@
 using AuthenticatedClubManagerMVC.Data;
 using AuthenticatedClubManagerMVC.Models;
 using AuthenticatedClubManagerMVC.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AuthenticatedClubManagerMVC.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _db;
