@@ -1,12 +1,13 @@
-﻿@model Product
+﻿@model Club
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<form method="post" enctype="multipart/form-data">
+
+<form method="post" asp-action="Edit" enctype="multipart/form-data">
     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h2 class="text-primary">Create Product</h2>
+            <h2 class="text-primary">Edit Club</h2>
             <hr />
         </div>
         <div asp-validation-summary="All"></div>
@@ -16,6 +17,7 @@
             @* //validations in the client side *@
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
+
 
         <div class="mb-3">
             <label asp-for="Description"></label>
@@ -29,24 +31,24 @@
             <span asp-validation-for="Price" class="text-danger"></span>
 
         </div>
-        @* <div class="mb-3">
-            <label asp-for="CategoryId"></label>
-            <input asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control" />
-            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        <div class="mb-3">
+            <label>Current image</label>
+            <img src="@Model.ImagePath" alt="An image" height="50" width="50"/>
+            <input asp-for="ImagePath" type="hidden" />
 
-        </div> *@
+            
+        </div>
+
         <div class="mb-3">
             <label asp-for="File"></label>
-            <input asp-for ="File" type="file" class="form-control" />
+            <input asp-for="File" type="file" class="form-control" />
             <span asp-validation-for="File" class="text-danger"></span>
 
         </div>
 
-        <button type="submit" class="btn btn-primary" style="width:150px">
-            Create
-        </button>
+        <button type="submit" class="btn btn-primary" style="width:150px">  Update </button>
 
-        <a asp-controller="Product"
+        <a asp-controller="Club"
            asp-action="Index"
            class="btn btn-secondary"
            style="width:150px">
@@ -54,8 +56,4 @@
         </a>
     </div>
 </form>
-@section Scripts {
-    @{
-        <partial name="_ValidationScriptsPartial"></partial>
-    }
-}
+

@@ -12,7 +12,7 @@ namespace AuthenticatedClubManagerMVC.Data
             
         }
 
-        public DbSet<Product> products { get; set; }
+        public DbSet<Club> Clubs { get; set; }
 
         public DbSet<Category> categories { get; set; }
     }

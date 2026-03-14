@@ -30,6 +30,7 @@ namespace AuthenticatedClubManagerMVC.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -171,7 +172,7 @@ namespace AuthenticatedClubManagerMVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "products",
+                name: "Clubs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -184,9 +185,9 @@ namespace AuthenticatedClubManagerMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_products", x => x.Id);
+                    table.PrimaryKey("PK_Clubs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_products_categories_CategoryId",
+                        name: "FK_Clubs_categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "categories",
                         principalColumn: "Id");
@@ -232,8 +233,8 @@ namespace AuthenticatedClubManagerMVC.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_products_CategoryId",
-                table: "products",
+                name: "IX_Clubs_CategoryId",
+                table: "Clubs",
                 column: "CategoryId");
         }
 
@@ -256,7 +257,7 @@ namespace AuthenticatedClubManagerMVC.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "products");
+                name: "Clubs");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

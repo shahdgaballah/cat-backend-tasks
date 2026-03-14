@@ -11,6 +11,6 @@ namespace AuthenticatedClubManagerMVC.Models
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public ICollection<Product> products { get; set; } = new HashSet<Product>();
+        public ICollection<Club> Clubs { get; set; } = new HashSet<Club>();
     }
 }

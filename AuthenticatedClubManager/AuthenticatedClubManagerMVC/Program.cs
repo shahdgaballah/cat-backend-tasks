@@ -1,12 +1,14 @@
 using AuthenticatedClubManagerMVC.Data;
+using AuthenticatedClubManagerMVC.Mapping;
 using AuthenticatedClubManagerMVC.Models;
+using AuthenticatedClubManagerMVC.Repositories.Implementation;
+using AuthenticatedClubManagerMVC.Repositories.Interfaces;
 using AuthenticatedClubManagerMVC.Services.Implementation;
 using AuthenticatedClubManagerMVC.Services.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
-using AuthenticatedClubManagerMVC.Mapping;
 namespace AuthenticatedClubManager
 {
     public class Program
@@ -18,11 +20,15 @@ namespace AuthenticatedClubManager
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            //automapper 
             builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
+
+            //db context
             builder.Services.AddDbContext<ApplicationDbContext>(
                 options=>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 
             );
+
             //add identity efcore
             builder.Services.AddIdentity<User, IdentityRole>( opt=>
              {
@@ -48,6 +54,13 @@ namespace AuthenticatedClubManager
              }
              ).AddEntityFrameworkStores<ApplicationDbContext>();
 
+            //club repo
+            builder.Services.AddScoped<IClubRepository, ClubRepository>();
+            
+            //club service
+            builder.Services.AddScoped<IClubService, ClubService>();
+            
+            //file service
             builder.Services.AddScoped<IFileService, FileService>();
 
             var app = builder.Build();
@@ -56,7 +69,7 @@ namespace AuthenticatedClubManager
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                // The default HSTS value is 30 days. You may want to change this for Clubion scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 

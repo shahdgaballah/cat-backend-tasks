@@ -6,13 +6,13 @@ using System.Runtime.CompilerServices;
 
 namespace AuthenticatedClubManagerMVC.Models
 {
-    public class Product
+    public class Club
     {
         [Key]
         public int Id { get; set; }
 
         [Required]
-        [Remote("IsProductNameExist", "Product", HttpMethod ="Post", ErrorMessage ="Name already exits")]
+        [Remote("IsClubNameExist", "Club", HttpMethod ="Post", ErrorMessage ="Name already exits")]
         public string Name { get; set; }
         public string Description { get; set; }
 

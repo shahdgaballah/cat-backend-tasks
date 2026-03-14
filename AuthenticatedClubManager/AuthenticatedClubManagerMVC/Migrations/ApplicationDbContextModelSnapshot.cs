@@ -43,7 +43,7 @@ namespace AuthenticatedClubManagerMVC.Migrations
                     b.ToTable("categories");
                 });
 
-            modelBuilder.Entity("AuthenticatedClubManagerMVC.Models.Product", b =>
+            modelBuilder.Entity("AuthenticatedClubManagerMVC.Models.Club", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,7 +73,7 @@ namespace AuthenticatedClubManagerMVC.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("products");
+                    b.ToTable("Clubs");
                 });
 
             modelBuilder.Entity("AuthenticatedClubManagerMVC.Models.User", b =>
@@ -103,10 +103,6 @@ namespace AuthenticatedClubManagerMVC.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -281,10 +277,10 @@ namespace AuthenticatedClubManagerMVC.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AuthenticatedClubManagerMVC.Models.Product", b =>
+            modelBuilder.Entity("AuthenticatedClubManagerMVC.Models.Club", b =>
                 {
                     b.HasOne("AuthenticatedClubManagerMVC.Models.Category", "Category")
-                        .WithMany("products")
+                        .WithMany("Clubs")
                         .HasForeignKey("CategoryId");
 
                     b.Navigation("Category");
@@ -343,7 +339,7 @@ namespace AuthenticatedClubManagerMVC.Migrations
 
             modelBuilder.Entity("AuthenticatedClubManagerMVC.Models.Category", b =>
                 {
-                    b.Navigation("products");
+                    b.Navigation("Clubs");
                 });
 #pragma warning restore 612, 618
         }
